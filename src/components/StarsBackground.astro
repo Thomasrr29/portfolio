@@ -1,0 +1,87 @@
+---
+// StarsBackground.astro
+---
+
+<div class="stars-container" id="stars-container"></div>
+
+<script>
+    function createStars() {
+        const container = document.getElementById("stars-container");
+        if (!container) return;
+
+        // Create multiple layers of stars for parallax
+        const layers = [
+            { count: 100, size: 1, duration: 20 },
+            { count: 50, size: 2, duration: 30 },
+            { count: 20, size: 3, duration: 40 },
+        ];
+
+        layers.forEach((layer) => {
+            const layerEl = document.createElement("div");
+            layerEl.className = "star-layer";
+            layerEl.style.animationDuration = `${layer.duration}s`;
+
+            let boxShadow = "";
+            for (let i = 0; i < layer.count; i++) {
+                const x = Math.floor(Math.random() * 2000);
+                const y = Math.floor(Math.random() * 2000);
+                boxShadow += `${x}px ${y}px #FFF${i === layer.count - 1 ? "" : ","}`;
+            }
+
+            const star = document.createElement("div");
+            star.style.width = `${layer.size}px`;
+            star.style.height = `${layer.size}px`;
+            star.style.background = "transparent";
+            star.style.boxShadow = boxShadow;
+            star.className = "star";
+
+            const star2 = star.cloneNode(true) as HTMLElement;
+            star2.style.top = "2000px"; // For seamless loop
+
+            layerEl.appendChild(star);
+            layerEl.appendChild(star2);
+            container.appendChild(layerEl);
+        });
+    }
+
+    // Initialize on load and view transitions
+    createStars();
+    document.addEventListener("astro:after-swap", createStars);
+</script>
+
+<style>
+    .stars-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at center, #0b0b1a 0%, #000000 100%);
+    }
+
+    :global(.star-layer) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: moveUp linear infinite;
+    }
+
+    :global(.star) {
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    @keyframes moveUp {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(-2000px);
+        }
+    }
+</style>

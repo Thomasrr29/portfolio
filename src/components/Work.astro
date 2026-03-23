@@ -1,0 +1,281 @@
+---
+// Work.astro
+const projects = [
+  {
+    title: "Callbell Comm System",
+    category: "Workflow Automation",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
+    color: "#4c1d95" /* Dark purple tint */,
+    link: "#",
+  },
+  {
+    title: "Funeral Home CRM",
+    category: "System Modernization",
+    image:
+      "https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&q=80&w=800",
+    color: "#134e4a" /* Dark teal tint */,
+    link: "#",
+  },
+  {
+    title: "Wompi Billing Gateway",
+    category: "Fintech Integration",
+    image:
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=800",
+    color: "#881337" /* Dark rose tint */,
+    link: "#",
+  },
+  {
+    title: "DOOH Ad Catalog",
+    category: "MVP Architecture",
+    image:
+      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800",
+    color: "#1e3a8a" /* Dark blue tint */,
+    link: "#",
+  },
+];
+---
+
+<section id="work" class="section work-section">
+  <div class="work-container">
+    <h2 class="section-title text-left reveal">Selected Works</h2>
+
+    <div class="work-list">
+      {
+        projects.map((project, index) => (
+          <a
+            href={project.link}
+            class="work-list-item reveal"
+            data-image={project.image}
+            data-color={project.color}
+          >
+            <div class="work-item-content">
+              <span class="work-index">
+                {(index + 1).toString().padStart(2, "0")}
+              </span>
+              <h3 class="work-title magnetic-btn">{project.title}</h3>
+              <span class="work-category">{project.category}</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="work-preview-container">
+    <div class="work-preview-img"></div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+
+  function initWorkHover() {
+    // Disable complex hover tracking on touch devices
+    if (
+      window.matchMedia("(pointer: coarse)").matches ||
+      window.innerWidth < 768
+    ) {
+      return;
+    }
+
+    const workItems = document.querySelectorAll(".work-list-item");
+    const previewContainer = document.querySelector(
+      ".work-preview-container",
+    ) as HTMLElement;
+    const previewImg = document.querySelector(
+      ".work-preview-img",
+    ) as HTMLElement;
+    const section = document.querySelector(".work-section") as HTMLElement;
+
+    if (!previewContainer || !previewImg || workItems.length === 0 || !section)
+      return;
+
+    let xTo = gsap.quickTo(previewContainer, "x", {
+        duration: 0.8,
+        ease: "power3",
+      }),
+      yTo = gsap.quickTo(previewContainer, "y", {
+        duration: 0.8,
+        ease: "power3",
+      });
+
+    window.addEventListener("mousemove", (e) => {
+      xTo(e.clientX);
+      yTo(e.clientY);
+    });
+
+    workItems.forEach((item) => {
+      item.addEventListener("mouseenter", (e) => {
+        const imgUrl = (e.currentTarget as HTMLElement).dataset.image;
+        const color = (e.currentTarget as HTMLElement).dataset.color;
+
+        // Update image
+        previewImg.style.backgroundImage = `url(${imgUrl})`;
+
+        // Show preview
+        gsap.to(previewContainer, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.4,
+          ease: "power2.out",
+        });
+
+        // Shift background color slightly
+        gsap.to(section, {
+          backgroundColor: color,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+
+        // Fade out other items
+        gsap.to(workItems, { opacity: 0.2, duration: 0.3 });
+        gsap.to(item, { opacity: 1, x: 20, duration: 0.3 });
+      });
+
+      item.addEventListener("mouseleave", () => {
+        gsap.to(previewContainer, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.4,
+          ease: "power2.in",
+        });
+        gsap.to(section, { backgroundColor: "var(--bg-color)", duration: 0.5 });
+        gsap.to(workItems, { opacity: 1, x: 0, duration: 0.3 });
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", initWorkHover);
+  if (
+    document.readyState === "complete" ||
+    document.readyState === "interactive"
+  ) {
+    initWorkHover();
+  } else {
+    document.addEventListener("DOMContentLoaded", initWorkHover);
+  }
+</script>
+
+<style>
+  .work-section {
+    padding: 10rem 0;
+    background: var(--bg-color);
+    position: relative;
+    transition: background-color 0.5s ease;
+  }
+
+  .work-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .text-left {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .work-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 4rem;
+  }
+
+  .work-list-item {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: block;
+    text-decoration: none;
+    color: var(--text-primary);
+    position: relative;
+  }
+
+  .work-list-item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .work-item-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .work-index {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    width: 10%;
+    transition: color 0.3s ease;
+  }
+
+  .work-title {
+    font-size: clamp(2rem, 5vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    width: 60%;
+    margin: 0;
+    line-height: 1;
+    display: inline-block;
+  }
+
+  .work-category {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    text-align: right;
+    width: 30%;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+  }
+
+  .work-list-item:hover .work-index,
+  .work-list-item:hover .work-category {
+    color: var(--text-primary);
+  }
+
+  /* Preview Image */
+  .work-preview-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 450px;
+    height: 320px;
+    pointer-events: none;
+    z-index: 100;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .work-preview-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+
+  @media (max-width: 768px) {
+    .work-preview-container {
+      display: none !important;
+    }
+    .work-item-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .work-index,
+    .work-category,
+    .work-title {
+      width: 100%;
+      text-align: left;
+    }
+    .work-list-item {
+      padding: 2.5rem 0;
+    }
+  }
+</style>

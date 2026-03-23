@@ -1,0 +1,56 @@
+---
+
+---
+
+<div class="kinetic-section">
+    <div class="kinetic-container">
+        <div class="kinetic-text" id="kinetic-text">
+            PROCESS OPTIMIZATION • BACKEND ARCHITECTURE • WORKFLOW AUTOMATION •
+            DATA MANAGEMENT • PROCESS OPTIMIZATION • BACKEND ARCHITECTURE •
+            WORKFLOW AUTOMATION • DATA MANAGEMENT •
+        </div>
+    </div>
+</div>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.to("#kinetic-text", {
+        scrollTrigger: {
+            trigger: ".kinetic-section",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+        },
+        x: "-50%",
+        ease: "none",
+    });
+</script>
+
+<style>
+    .kinetic-section {
+        padding: 4rem 0;
+        overflow: hidden;
+        background: var(--bg-color);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .kinetic-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+    .kinetic-text {
+        font-size: clamp(2.5rem, 8vw, 8rem);
+        font-weight: 800;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        will-change: transform;
+    }
+</style>

@@ -1,0 +1,61 @@
+---
+// ScrollTracker.astro
+---
+
+<div class="narrative-connector">
+    <div class="narrative-progress" id="scroll-progress"></div>
+</div>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    function initScrollTracking() {
+        gsap.to("#scroll-progress", {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: {
+                trigger: document.body,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0.1,
+            },
+        });
+    }
+
+    function initRevealObserver() {
+        const reveals = gsap.utils.toArray(".reveal");
+        reveals.forEach((reveal: any) => {
+            gsap.to(reveal, {
+                scrollTrigger: {
+                    trigger: reveal,
+                    start: "top 85%",
+                    toggleClass: "visible",
+                    once: true,
+                },
+            });
+        });
+    }
+
+    // Support Astro's ViewTransitions (ClientRouter)
+    document.addEventListener("astro:page-load", () => {
+        ScrollTrigger.refresh();
+        initScrollTracking();
+        initRevealObserver();
+    });
+
+    if (
+        document.readyState === "complete" ||
+        document.readyState === "interactive"
+    ) {
+        initScrollTracking();
+        initRevealObserver();
+    } else {
+        document.addEventListener("DOMContentLoaded", () => {
+            initScrollTracking();
+            initRevealObserver();
+        });
+    }
+</script>

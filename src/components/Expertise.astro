@@ -1,0 +1,259 @@
+---
+// Expertise.astro
+---
+
+<section id="expertise" class="section expertise-section">
+    <div class="expertise-container">
+        <h2 class="section-title reveal" style="text-align: left">
+            My Expertise
+        </h2>
+
+        <div class="expertise-grid">
+            <div class="bento-box bento-large reveal">
+                <div class="bento-glow"></div>
+                <div class="bento-content">
+                    <div class="bento-icon">
+                        <svg
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M5 12h14M12 5l7 7-7 7"></path></svg
+                        >
+                    </div>
+                    <h3 class="bento-title">Backend & Systems Architecture</h3>
+                    <p class="bento-desc">
+                        Specializing in building robust, scalable Node.js
+                        backend systems and seamless integrations that form the
+                        backbone of modern business operations. If you have a
+                        process slowing your company down, I have the
+                        architecture to speed it up.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bento-box bento-wide reveal">
+                <div class="bento-content">
+                    <div class="bento-icon">
+                        <svg
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                            ></path></svg
+                        >
+                    </div>
+                    <h3 class="bento-title">Infrastructure & DevOps</h3>
+                    <p class="bento-desc">
+                        Proficient in Server Architecture, Docker, Deployment
+                        Pipelines (CI/CD), and Data Management methodologies to
+                        ensure unbreakable uptime and automated delivery.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bento-box bento-small bento-status reveal">
+                <div class="status-indicator"></div>
+                <h3 class="bento-title" style="margin-bottom: 0.5rem">
+                    Status
+                </h3>
+                <p class="bento-desc text-accent" style="font-size: 0.9rem">
+                    Currently turning abstract ideas into tangible business
+                    realities.
+                </p>
+            </div>
+
+            <div class="bento-box bento-small reveal">
+                <div class="bento-content">
+                    <div class="bento-icon" style="margin-bottom: 1rem">
+                        <svg
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
+                        >
+                    </div>
+                    <h3 class="bento-title" style="font-size: 1.25rem">
+                        The Bridge
+                    </h3>
+                    <p class="bento-desc" style="font-size: 0.9rem">
+                        From teaching Python to kids in Kodland to optimizing
+                        enterprise architectures.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .expertise-section {
+        position: relative;
+        padding: 5rem 0 8rem 0;
+    }
+
+    .expertise-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .expertise-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 250px;
+        gap: 1.5rem;
+    }
+
+    .bento-box {
+        background: var(--surface);
+        border: 1px solid var(--surface-border);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        transition:
+            transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+            border-color 0.4s ease;
+    }
+
+    .bento-box:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: rgba(139, 92, 246, 0.5);
+    }
+
+    .bento-glow {
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        background: radial-gradient(
+            circle,
+            rgba(139, 92, 246, 0.4) 0%,
+            transparent 70%
+        );
+        opacity: 0;
+        border-radius: 50%;
+        top: -100px;
+        right: -100px;
+        transition: opacity 0.5s ease;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .bento-box:hover .bento-glow {
+        opacity: 1;
+    }
+
+    .bento-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .bento-large {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    .bento-wide {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
+    .bento-small {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: 2rem;
+    }
+
+    .bento-status {
+        background: radial-gradient(
+            circle at top left,
+            rgba(45, 212, 191, 0.1),
+            var(--surface)
+        );
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .status-indicator {
+        width: 1.2rem;
+        height: 1.2rem;
+        background: #2dd4bf;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        box-shadow: 0 0 15px #2dd4bf;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(45, 212, 191, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(45, 212, 191, 0);
+        }
+    }
+
+    .bento-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        color: var(--accent-light);
+        margin-bottom: 2rem;
+    }
+
+    .bento-icon svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .bento-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+    }
+
+    .bento-desc {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 1.05rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .expertise-grid {
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: minmax(250px, auto);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .expertise-grid {
+            grid-template-columns: 1fr;
+        }
+        .bento-large,
+        .bento-wide {
+            grid-column: span 1;
+            grid-row: auto;
+        }
+    }
+</style>

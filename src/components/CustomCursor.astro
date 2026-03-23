@@ -1,0 +1,122 @@
+---
+// CustomCursor.astro
+---
+
+<div class="custom-cursor" id="custom-cursor"></div>
+
+<script>
+    import { gsap } from "gsap";
+
+    function initCursor() {
+        const cursor = document.getElementById("custom-cursor");
+        // Disable on touch devices
+        if (
+            !cursor ||
+            window.matchMedia("(pointer: coarse)").matches ||
+            window.innerWidth < 768
+        ) {
+            if (cursor) cursor.style.display = "none";
+            return;
+        }
+
+        // Reset display for SPA navigation
+        cursor.style.display = "block";
+
+        gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+
+        // Use quickTo for performance
+        let xTo = gsap.quickTo(cursor, "x", { duration: 0.4, ease: "power3" }),
+            yTo = gsap.quickTo(cursor, "y", { duration: 0.4, ease: "power3" });
+
+        const moveCursor = (e: MouseEvent) => {
+            xTo(e.clientX);
+            yTo(e.clientY);
+        };
+
+        window.removeEventListener("mousemove", moveCursor);
+        window.addEventListener("mousemove", moveCursor);
+
+        // Magnetic effect logic
+        const magneticBtns = document.querySelectorAll(".magnetic-btn");
+
+        magneticBtns.forEach((btn) => {
+            // Clone existing nodes to remove old listeners on SPA transitions
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode?.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener("mouseenter", () => {
+                gsap.to(cursor, {
+                    scale: 3.5,
+                    backgroundColor: "transparent",
+                    border: "1px solid rgba(255, 255, 255, 0.5)",
+                    mixBlendMode: "normal",
+                    duration: 0.3,
+                });
+            });
+
+            newBtn.addEventListener("mouseleave", () => {
+                gsap.to(cursor, {
+                    scale: 1,
+                    backgroundColor: "#fff",
+                    border: "none",
+                    mixBlendMode: "difference",
+                    duration: 0.3,
+                });
+                gsap.to(newBtn, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.4)",
+                });
+            });
+
+            newBtn.addEventListener("mousemove", (e: Event) => {
+                const mouseEvent = e as MouseEvent;
+                const element = newBtn as HTMLElement;
+                const rect = element.getBoundingClientRect();
+                const x = mouseEvent.clientX - rect.left - rect.width / 2;
+                const y = mouseEvent.clientY - rect.top - rect.height / 2;
+                gsap.to(newBtn, { x: x * 0.3, y: y * 0.3, duration: 0.2 });
+            });
+        });
+    }
+
+    document.addEventListener("astro:page-load", initCursor);
+    if (
+        document.readyState === "complete" ||
+        document.readyState === "interactive"
+    ) {
+        initCursor();
+    } else {
+        document.addEventListener("DOMContentLoaded", initCursor);
+    }
+</script>
+
+<style>
+    .custom-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        background-color: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+        mix-blend-mode: difference;
+        will-change: transform;
+    }
+
+    /* Hide native cursor when hovering magnetic buttons */
+    @media (pointer: fine) {
+        :global(.magnetic-btn) {
+            cursor: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .custom-cursor {
+            display: none !important;
+        }
+    }
+</style>
