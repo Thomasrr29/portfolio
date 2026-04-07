@@ -1,190 +1,202 @@
 ---
-import StarsBackground from "./StarsBackground.astro";
-import Canvas3D from "./Canvas3D.jsx";
+// Hero — Thomas Restrepo Portfolio
 ---
 
-<section class="section hero-section">
-    <StarsBackground />
-    <Canvas3D client:load />
+<section class="hero section">
+  <div class="container">
+    <div class="hero-inner">
 
-    <div class="hero-content">
-        <h1 class="hero-title glitch" data-text="THOMAS RESTREPO">
-            THOMAS RESTREPO
+      <!-- Left: text -->
+      <div class="hero-left">
+        <p class="hero-location fade-up">Medellín, Colombia</p>
+
+        <h1 class="hero-name fade-up delay-1">
+          Thomas<br />Restrepo
         </h1>
-        <p class="hero-subtitle">
-            Software Engineer & Technology Administrator
+
+        <p class="hero-title-label fade-up delay-2">Product Engineer</p>
+
+        <p class="hero-pitch fade-up delay-3">
+          Entiendo la lógica de tu negocio antes de escribir
+          una línea de código. Diseño e implemento el sistema
+          correcto — el que permite que tu negocio escale.
         </p>
 
-        <div class="hero-description">
-            <p>
-                I engineer high-impact systems that accelerate business growth,
-                empowering teams to focus on true innovation.
-            </p>
+        <div class="hero-ctas fade-up delay-4">
+          <a href="mailto:thomasrr29@gmail.com" class="cta-primary">
+            thomasrr29@gmail.com
+          </a>
+          <a
+            href="https://linkedin.com/in/thomasrpo"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cta-link"
+          >LinkedIn</a>
+          <a
+            href="https://github.com/Thomasrr29"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cta-link"
+          >GitHub</a>
         </div>
+      </div>
 
-        <div class="hero-actions">
-            <a href="#work" class="btn btn-primary magnetic-btn">View My Work</a
-            >
-            <a href="#contact" class="btn btn-secondary magnetic-btn"
-                >Get in Touch</a
-            >
+      <!-- Right: duotone photo -->
+      <div class="hero-photo fade-up delay-3">
+        <div class="photo-wrap">
+          <img src="/image.png" alt="Thomas Restrepo" class="photo" />
+          <div class="photo-overlay"></div>
         </div>
+      </div>
+
     </div>
+  </div>
 </section>
 
-<script>
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const tl = gsap.timeline();
-    tl.from(".hero-title", {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        delay: 0.2,
-    })
-        .from(
-            ".hero-subtitle",
-            { y: 30, opacity: 0, duration: 0.8, ease: "power3.out" },
-            "-=0.6",
-        )
-        .from(
-            ".hero-description",
-            { y: 20, opacity: 0, duration: 0.8, ease: "power3.out" },
-            "-=0.6",
-        )
-        .from(
-            ".hero-actions",
-            { y: 20, opacity: 0, duration: 0.8, ease: "power3.out" },
-            "-=0.6",
-        );
-
-    gsap.to(".hero-title", {
-        scrollTrigger: {
-            trigger: ".hero-section",
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-        },
-        y: 150,
-        scale: 0.8,
-        opacity: 0.1,
-    });
-</script>
-
 <style>
-    .hero-section {
-        position: relative;
-        min-height: 90vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
+  .hero {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 5rem;
+    align-items: end;
+  }
+
+  /* ── Left ── */
+  .hero-left {
+    max-width: 600px;
+  }
+
+  /* ── Location ── */
+  .hero-location {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  /* ── Name ── */
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── Title label ── */
+  .hero-title-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.75rem;
+  }
+
+  /* ── Pitch ── */
+  .hero-pitch {
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-muted);
+    max-width: 48ch;
+    margin-bottom: 2rem;
+  }
+
+  /* ── CTAs ── */
+  .hero-ctas {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-primary {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent-text);
+    background: var(--accent-light);
+    border: 0.5px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    transition: opacity 0.2s;
+  }
+
+  .cta-primary:hover { opacity: 0.75; }
+
+  .cta-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    border-bottom: 0.5px solid currentColor;
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
+
+  .cta-link:hover { color: var(--text-primary); }
+
+  /* ── Photo ── */
+  .hero-photo {
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .photo-wrap {
+    position: relative;
+    width: 280px;
+    height: 360px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: grayscale(1) contrast(1.1) brightness(0.95);
+  }
+
+  /* Duotone overlay: teal on top with multiply */
+  .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: #1D9E75;
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
     }
 
-    .background-effects {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        overflow: hidden;
+    .hero-photo {
+      width: 200px;
     }
 
-    .background-effects {
-        display: none;
+    .photo-wrap {
+      width: 200px;
+      height: 260px;
     }
+  }
 
-    .hero-content {
-        text-align: center;
-        max-width: 800px;
-        z-index: 1;
-    }
-
-    .hero-title {
-        font-family: var(--font-artistic, "Cal Sans", sans-serif);
-        font-size: clamp(3.5rem, 10vw, 8rem);
-        font-weight: 600;
-        font-style: normal;
-        line-height: 1;
-        margin-bottom: 1.5rem;
-        letter-spacing: -0.02em;
-        background: linear-gradient(to bottom right, #ffffff, #a1a1aa);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-        font-family: var(--font-base, "Outfit", sans-serif);
-        font-size: clamp(1rem, 2.5vw, 1.4rem);
-        font-weight: 500;
-        color: var(--accent-light);
-        margin-bottom: 2rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
-
-    .hero-description p {
-        font-family: var(--font-base, "Outfit", sans-serif);
-        font-size: clamp(1.1rem, 2vw, 1.4rem);
-        line-height: 1.7;
-        color: var(--text-secondary);
-        margin-bottom: 3rem;
-        max-width: 600px;
-        margin-inline: auto;
-    }
-
-    .hero-actions {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-    }
-
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.875rem 2rem;
-        border-radius: 9999px;
-        font-size: 1rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-    .btn-primary {
-        background: var(--text-primary);
-        color: var(--bg-color);
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-secondary {
-        background: transparent;
-        color: var(--text-primary);
-        border: 1px solid var(--surface-border);
-    }
-
-    .btn-secondary:hover {
-        border-color: var(--text-primary);
-        transform: translateY(-2px);
-    }
-
-    @keyframes fadeUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+  @media (max-width: 480px) {
+    .hero-photo { display: none; }
+  }
 </style>

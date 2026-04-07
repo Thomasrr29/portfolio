@@ -1,0 +1,179 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+
+// All stack icons available in /public
+const techWithIcons = [
+  { name: "Node.js",     icon: "/javascript.webp"           },
+  { name: "TypeScript",  icon: "/typescript.webp"           },
+  { name: "Next.js",     icon: "/nextjs_icon_132160.webp"   },
+  { name: "React",       icon: "/reactjs.webp"              },
+  { name: "Astro",       icon: "/astro.svg"                 },
+  { name: "PostgreSQL",  icon: "/postgres.webp"             },
+  { name: "Prisma ORM",  icon: "/prisma.svg"                },
+  { name: "Supabase",    icon: "/supabase.webp"             },
+  { name: "Python",      icon: "/python.webp"               },
+  { name: "NestJS",      icon: "/nestjs.webp"               },
+];
+
+// Tech without icons — text only
+const techText = [
+  "Docker", "Railway",
+];
+---
+
+<section id="stack" class="section stack-section">
+  <div class="container">
+    <SectionLabel label="Stack" />
+
+    <div class="stack-grid" id="stack-grid">
+      {techWithIcons.map((item, i) => (
+        <div class="stack-item" style={`--i:${i}`}>
+          <div class="icon-wrap">
+            <img
+              src={item.icon}
+              alt={item.name}
+              class="stack-icon"
+              width="22"
+              height="22"
+            />
+          </div>
+          <span class="stack-name">{item.name}</span>
+        </div>
+      ))}
+
+      {techText.map((name, i) => (
+        <div class="stack-item stack-item--text" style={`--i:${i + techWithIcons.length}`}>
+          <div class="icon-wrap icon-wrap--empty">
+            <span class="icon-dot"></span>
+          </div>
+          <span class="stack-name">{name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack-section {
+    position: relative;
+  }
+
+  /* ── Grid ── */
+  .stack-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ── Item ── */
+  .stack-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 7px 14px 7px 10px;
+    border: var(--border);
+    border-radius: 100px;
+    background: var(--surface);
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.2s,
+      border-color 0.2s;
+    transition-delay: calc(var(--i) * 0.04s + 0.05s);
+  }
+
+  .stack-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stack-item:hover {
+    background: #1a1a18;
+    border-color: rgba(255,255,255,0.1);
+  }
+
+  /* ── Icon container ── */
+  .icon-wrap {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── Icon image — white filter ── */
+  .stack-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
+    opacity: 0.55;
+    transition: opacity 0.2s;
+  }
+
+  .stack-item:hover .stack-icon {
+    opacity: 1;
+  }
+
+  /* ── Dot for text-only items ── */
+  .icon-wrap--empty {
+    width: 22px;
+    height: 22px;
+  }
+
+  .icon-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    display: block;
+    margin: auto;
+    transition: background 0.2s;
+  }
+
+  .stack-item:hover .icon-dot {
+    background: var(--accent);
+  }
+
+  /* ── Name ── */
+  .stack-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+
+  .stack-item:hover .stack-name {
+    color: #fff;
+  }
+
+  @media (max-width: 480px) {
+    .stack-grid { gap: 0.4rem; }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll(".stack-item").forEach((el) => {
+            el.classList.add("visible");
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  const grid = document.getElementById("stack-grid");
+  if (grid) observer.observe(grid);
+</script>

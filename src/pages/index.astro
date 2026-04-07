@@ -1,47 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import Expertise from "../components/Expertise.astro";
-import Work from "../components/Work.astro";
 import Experience from "../components/Experience.astro";
-import Footer from "../components/Footer.astro";
-import ScrollTracker from "../components/ScrollTracker.astro";
-import KineticText from "../components/KineticText.astro";
+import Stack from "../components/Stack.astro";
+import Projects from "../components/Projects.astro";
+import Education from "../components/Education.astro";
+import Contact from "../components/Contact.astro";
 ---
 
-<Layout title="Tamal Sen | Software Developer & Frontend Enthusiast">
-	<div class="story-wrapper relative">
-		<ScrollTracker />
-		<Hero />
-		<KineticText />
-		<Expertise />
-		<Work />
-		<Experience />
-		<Footer />
-	</div>
+<Layout>
+  <main>
+    <Hero />
+    <Experience />
+    <Stack />
+    <Projects />
+    <Education />
+    <Contact />
+  </main>
 </Layout>
 
-<style>
-	.story-wrapper {
-		position: relative;
-		overflow: hidden;
-	}
-	.text-center {
-		text-align: center;
-	}
-	.max-w-2xl {
-		max-width: 42rem;
-	}
-	.mx-auto {
-		margin-left: auto;
-		margin-right: auto;
-	}
-	.text-xl {
-		font-size: 1.25rem;
-		line-height: 1.8;
-	}
-	.text-accent {
-		color: var(--accent-light);
-		font-style: italic;
-	}
-</style>
+<script>
+  // Global scroll-triggered reveal (supplements per-component observers)
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    },
+    { threshold: 0.07 }
+  );
+
+  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+</script>

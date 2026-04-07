@@ -1,0 +1,126 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+---
+
+<section id="contact" class="section">
+  <div class="container">
+    <SectionLabel label="Contacto" />
+
+    <div class="contact-inner reveal">
+      <p class="contact-headline">
+        ¿Tienes un problema que resolver?
+      </p>
+
+      <div class="contact-links">
+        <a href="mailto:thomasrr29@gmail.com" class="contact-item">
+          <span class="contact-label">Email</span>
+          <span class="contact-value">thomasrr29@gmail.com</span>
+        </a>
+
+        <a
+          href="https://linkedin.com/in/thomasrpo"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-item"
+        >
+          <span class="contact-label">LinkedIn</span>
+          <span class="contact-value">linkedin.com/in/thomasrpo</span>
+        </a>
+
+        <a
+          href="https://github.com/Thomasrr29"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-item"
+        >
+          <span class="contact-label">GitHub</span>
+          <span class="contact-value">github.com/Thomasrr29</span>
+        </a>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span class="footer-copy">
+        Thomas Restrepo · {new Date().getFullYear()}
+      </span>
+      <span class="footer-note">Medellín, Colombia</span>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .contact-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .contact-headline {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.15;
+    max-width: 20ch;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.875rem;
+    border-bottom: var(--border);
+    transition: color 0.2s;
+    flex-wrap: wrap;
+  }
+
+  .contact-item:first-child {
+    border-top: var(--border);
+  }
+
+  .contact-item:hover .contact-value {
+    color: var(--accent);
+  }
+
+  .contact-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .contact-value {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    transition: color 0.2s;
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: var(--border);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footer-copy,
+  .footer-note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+</style>
