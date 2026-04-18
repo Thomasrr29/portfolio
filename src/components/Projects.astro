@@ -4,27 +4,33 @@ import SectionLabel from "./SectionLabel.astro";
 const projects = [
   {
     number: "01",
-    title: "CRM Funerario + Pagos",
-    description: "CRM completo para negocio activo — requerimientos → Prisma ORM → Docker → Railway. Integración de pasarela de pagos con webhooks para confirmar estados en tiempo real.",
-    badge: "Privado",
-    badgeType: "private",
-    stack: ["Node.js", "Prisma ORM", "PostgreSQL", "Docker", "Railway"],
+    title: "Cotizador Funerario",
+    description: "Sistema de cotización integral para servicios funerarios, integrando lógica de precios dinámica y exportación de proformas.",
+    badge: "En producción",
+    badgeType: "wip",
+    stack: ["Node.js", "Prisma ORM", "PostgreSQL", "Railway"],
+    image: "/projects/cotizacion_live.png",
+    link: "https://membership-production-b533.up.railway.app/cotizacion",
   },
   {
     number: "02",
     title: "Mensajes Masivos",
-    description: "Sistema de automatización de comunicaciones a clientes mediante integración con APIs externas de mensajería.",
+    description: "Plataforma de automatización de comunicaciones mediante WhatsApp y SMS para fidelización de clientes.",
     badge: "Privado",
     badgeType: "private",
-    stack: ["Node.js", "Railway"],
+    stack: ["Node.js", "Express", "API Rest"],
+    image: null,
+    link: "#",
   },
   {
     number: "03",
-    title: "ShareFlow — DOOH",
-    description: "Ecommerce de publicidad en pantallas digitales para Colombia. Arquitectura completa diseñada desde cero. Versión parcial en producción.",
-    badge: "En construcción",
+    title: "DDOH — ShareFlow",
+    description: "Ecosistema de publicidad exterior digital (DOOH) que conecta marcas con pantallas en tiempo real.",
+    badge: "Live",
     badgeType: "wip",
-    stack: ["Next.js", "TypeScript", "Supabase", "Docker"],
+    stack: ["Next.js", "TypeScript", "Supabase", "Tailwind"],
+    image: "/projects/shareflow_live.png",
+    link: "https://ads.shareflow.me/",
   },
 ];
 ---
@@ -35,27 +41,39 @@ const projects = [
 
     <div class="proj-list">
       {projects.map((project, i) => (
-        <article class="proj-item" style={`--i:${i}`}>
-          <div class="proj-accent-line"></div>
+        <a href={project.link} target="_blank" rel="noopener noreferrer" class="proj-item-link">
+          <article class="proj-item" style={`--i:${i}`}>
+            <div class="proj-accent-line"></div>
 
-          <div class="proj-content">
-            <div class="proj-top">
-              <span class="proj-number">{project.number}</span>
-              <span class={`proj-badge badge-${project.badgeType}`}>
-                {project.badge}
-              </span>
+            <div class="proj-image-container">
+              {project.image ? (
+                <img src={project.image} alt={project.title} class="proj-img" />
+              ) : (
+                <div class="proj-img-placeholder">
+                  <span>{project.title}</span>
+                </div>
+              )}
             </div>
 
-            <h3 class="proj-title">{project.title}</h3>
-            <p class="proj-desc">{project.description}</p>
+            <div class="proj-content">
+              <div class="proj-top">
+                <span class="proj-number">{project.number}</span>
+                <span class={`proj-badge badge-${project.badgeType}`}>
+                  {project.badge}
+                </span>
+              </div>
 
-            <div class="proj-tags">
-              {project.stack.map((s) => (
-                <span class="tag">{s}</span>
-              ))}
+              <h3 class="proj-title">{project.title}</h3>
+              <p class="proj-desc">{project.description}</p>
+
+              <div class="proj-tags">
+                {project.stack.map((s) => (
+                  <span class="tag">{s}</span>
+                ))}
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
+        </a>
       ))}
     </div>
   </div>
@@ -93,27 +111,74 @@ const projects = [
   }
 
   /* ── Item ── */
+  .proj-item-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+    border-right: var(--border);
+  }
+
+  .proj-item-link:last-child {
+    border-right: none;
+  }
+
   .proj-item {
     position: relative;
-    border-right: var(--border);
-    padding: 2rem 2rem 2.25rem;
+    padding: 0;
     overflow: hidden;
     opacity: 0;
     transform: translateY(16px);
     transition:
       opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.35s ease;
     transition-delay: calc(var(--i) * 0.1s + 0.05s);
-    cursor: default;
-  }
-
-  .proj-item:last-child {
-    border-right: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .proj-item.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* ── Image ── */
+  .proj-image-container {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--surface);
+    border-bottom: var(--border);
+    position: relative;
+  }
+
+  .proj-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .proj-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg-color) 100%);
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.5;
+  }
+
+  .proj-item:hover .proj-img {
+    transform: scale(1.05);
   }
 
   /* ── Accent line on hover ── */
@@ -127,6 +192,7 @@ const projects = [
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 2;
   }
 
   .proj-item:hover .proj-accent-line {
@@ -142,7 +208,8 @@ const projects = [
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    height: 100%;
+    padding: 1.5rem 2rem 2rem;
+    flex: 1;
   }
 
   /* ── Top row ── */
@@ -218,11 +285,11 @@ const projects = [
     .proj-list {
       grid-template-columns: 1fr;
     }
-    .proj-item {
+    .proj-item-link {
       border-right: none;
       border-bottom: var(--border);
     }
-    .proj-item:last-child { border-bottom: none; }
+    .proj-item-link:last-child { border-bottom: none; }
   }
 </style>
 
