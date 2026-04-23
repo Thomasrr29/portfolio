@@ -1,0 +1,217 @@
+---
+const projects = [
+  {
+    id: "belts",
+    title: "Belts Party",
+    description: "Experiencia basada en expresar el misterio, FOMO y manejo de la emoción.",
+    link: "https://effervescent-buttercream-9f2def.netlify.app/",
+    images: [
+      "/projects/belts_party.png",
+      "/projects/belts_party2.png"
+    ],
+    rotation: -3,
+    position: { top: "10%", left: "10%" }
+  },
+  {
+    id: "essential",
+    title: "Essential Inventory",
+    description: "Catálogo online usando sistema de inventario de Odoo.",
+    link: "https://oddo-inventary-kwnx.vercel.app/",
+    images: [
+      "/projects/essential_inventory.png",
+      "/projects/essential_inventory2.png"
+    ],
+    rotation: 4,
+    position: { top: "20%", left: "55%" }
+  }
+];
+---
+
+<div class="collage-container" id="collage-board">
+  <div class="grid-background"></div>
+  
+  <div class="collage-inner">
+    {projects.map((project, index) => (
+      <a 
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="project-group-link"
+      >
+        <div 
+          class="project-group" 
+          data-id={project.id} 
+          style={`--r: ${project.rotation}deg; --i: ${index}`}
+        >
+          <div class="images-stack">
+            {project.images.map((img, imgIdx) => (
+              <div class="image-wrapper" style={`--ir: ${(imgIdx * 4) - 2}deg; --iz: ${project.images.length - imgIdx}`}>
+                <div class="tape top-right"></div>
+                <div class="tape bottom-left"></div>
+                <img src={img} alt={project.title} class="collage-img" />
+              </div>
+            ))}
+          </div>
+          
+          <div class="project-info">
+            <h3 class="project-title-hand">{project.title}</h3>
+            <p class="project-desc-mini">{project.description}</p>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .collage-container {
+    position: relative;
+    width: 100%;
+    padding: 4rem 2rem;
+    background: #f4f1ea;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .grid-background {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .collage-inner {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6rem;
+    z-index: 1;
+  }
+
+  .project-group-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+  }
+
+  /* ── Project Group ── */
+  .project-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 320px;
+    transform: rotate(var(--r));
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .project-group-link:hover .project-group,
+  .project-group-link:focus .project-group {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 50;
+  }
+
+  /* ── Image Stack ── */
+  .images-stack {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+  }
+
+  .image-wrapper {
+    position: absolute;
+    inset: 0;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transform: rotate(var(--ir));
+    z-index: var(--iz);
+    transition: transform 0.4s ease, z-index 0.4s ease;
+  }
+
+  .project-group-link:hover .image-wrapper {
+    transform: rotate(calc(var(--ir) * 0.5));
+  }
+
+  .collage-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.1) contrast(1.05);
+  }
+
+  /* ── Tape Effect ── */
+  .tape {
+    position: absolute;
+    width: 80px;
+    height: 25px;
+    background: rgba(235, 230, 200, 0.8);
+    backdrop-filter: blur(2px);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);
+    z-index: 100;
+  }
+
+  .tape.top-right {
+    top: -10px;
+    right: -20px;
+    transform: rotate(35deg);
+  }
+
+  .tape.bottom-left {
+    bottom: -10px;
+    left: -20px;
+    transform: rotate(45deg);
+  }
+
+  /* ── Info ── */
+  .project-info {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: rotate(calc(var(--r) * -0.5));
+    transition: transform 0.3s ease;
+  }
+
+  .project-group-link:hover .project-info {
+    transform: rotate(0deg);
+  }
+
+  .project-title-hand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .project-desc-mini {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .collage-inner {
+      gap: 4rem;
+    }
+    
+    .project-group {
+      width: 100%;
+      max-width: 320px;
+      transform: rotate(0deg);
+    }
+    
+    .project-info {
+      transform: rotate(0deg);
+    }
+  }
+</style>
+

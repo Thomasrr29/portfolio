@@ -1,0 +1,252 @@
+---
+const profProjects = [
+  {
+    title: "Sistema de",
+    subtitle: "Pagos",
+    description: "Recaudación mensual integrada",
+    link: "https://pagos.funerariasangabriel.com/pago-mensual",
+    image: "/projects/payment_system.png",
+  },
+  {
+    title: "Cotizador",
+    subtitle: "Funerario",
+    description: "Sistema de proformas dinámico",
+    link: "https://membership-production-b533.up.railway.app/cotizacion",
+    image: "/projects/cotizacion_live.png",
+  },
+  {
+    title: "DDOH",
+    subtitle: "ShareFlow",
+    description: "Ecosistema de publicidad digital",
+    link: "https://ads.shareflow.me/",
+    image: "/projects/shareflow_live.png",
+  },
+  {
+    title: "Mensajes",
+    subtitle: "Masivos",
+    description: "Automatización de WhatsApp y SMS",
+    link: "#",
+    image: "/projects/cotizacion_live.png",
+  }
+];
+---
+
+<!-- Import Pinyon Script font directly in HTML to ensure it applies -->
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<div class="prof-list-wrapper">
+  <div class="prof-grid-container">
+    {profProjects.map((project, index) => {
+      const num = (index + 1).toString().padStart(2, '0');
+      return (
+        <a href={project.link} target="_blank" rel="noopener noreferrer" class="prof-list-item">
+          <div class="prof-light-border"></div>
+          <div class="prof-hover-bg" style={`background-image: url('${project.image}')`}></div>
+          
+          <div class="prof-content">
+            <div class="prof-number">{num}</div>
+            
+            <div class="prof-details">
+              <h3 class="prof-title">{project.title}</h3>
+              <h3 class="prof-title">{project.subtitle}</h3>
+              <p class="prof-desc">{project.description}</p>
+              <span class="prof-cta">Click para visualizar</span>
+            </div>
+          </div>
+        </a>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+
+  .prof-list-wrapper {
+    background-color: #1A1A18; /* Dark gray surface from brand identity */
+    padding: 4rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+    color: #EEEEE8; /* Light gray text from brand identity */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
+
+  .prof-grid-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 6rem;
+  }
+
+  .prof-grid-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.15); /* Subtle divider */
+    transform: translateX(-50%);
+  }
+
+  .prof-list-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #EEEEE8 !important;
+    padding: 3rem 1rem;
+    margin: 0 -1rem; /* Offset padding for hover effect */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 1;
+    transform: scale(1);
+  }
+
+  .prof-list-item:nth-last-child(1),
+  .prof-list-item:nth-last-child(2) {
+    border-bottom-color: transparent;
+  }
+
+  .prof-list-item:hover {
+    transform: scale(1.03);
+    z-index: 10;
+    background: rgba(26, 26, 24, 0.5);
+    border-bottom-color: transparent;
+  }
+
+  .prof-light-border {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 20px rgba(29, 158, 117, 0.3), inset 0 0 10px rgba(29, 158, 117, 0.15);
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .prof-list-item:hover .prof-light-border {
+    opacity: 1;
+  }
+
+  .prof-hover-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .prof-hover-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 26, 24, 0.85); /* Dark gray overlay */
+  }
+
+  .prof-list-item:hover .prof-hover-bg {
+    opacity: 1;
+  }
+
+  .prof-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    z-index: 3;
+  }
+
+  .prof-number {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 6rem;
+    color: var(--accent) !important; /* Green brand color */
+    line-height: 0.8;
+    font-weight: 400;
+  }
+
+  .prof-details {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .prof-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #ffffff !important;
+    margin: 0;
+  }
+
+  .prof-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-top: 0.5rem;
+    max-width: 200px;
+    margin-left: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .prof-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .prof-list-item:hover .prof-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    .prof-list-wrapper {
+      padding: 2rem 1.5rem;
+    }
+    
+    .prof-grid-container {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .prof-grid-container::after {
+      display: none;
+    }
+
+    .prof-list-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      margin: 0;
+      padding: 2rem 1rem;
+    }
+    
+    .prof-list-item:nth-last-child(2) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .prof-number {
+      font-size: 4.5rem;
+    }
+
+    .prof-title {
+      font-size: 1.3rem;
+    }
+  }
+</style>
